@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
 import RadioForm from 'react-native-simple-radio-button';
 
 export default function App() {
-  const [weight, setWeight] = useState(70);
+  const [weight, setWeight] = useState(0);
   const [bottles, setBottles] = useState(1);
   const [time, setTime] = useState(1);
   const [gender, setGender] = useState('male');
@@ -23,7 +23,16 @@ export default function App() {
     let burning = weight / 10;
     let gramsl = grams - (burning * time)
 
-    if (gender === 'male') {
+    if (weight === 0) {
+      Alert.alert(
+        "Set weight",
+        "Weight can not be empty",
+        [
+          {text: "Ok",}
+        ]
+      );
+    }
+    else if (gender === 'male') {
       result = gramsl / (weight * 0.7)
     }
     else {
@@ -44,11 +53,12 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header}>Alcometer</Text>
       <Text style={styles.field}>Weight</Text>
-      <TextInput style={styles.input} value={weight} onChangeText={text => setWeight(text)} keyboardType='decimal-pad'/>
+      <TextInput style={styles.input} value={weight} onChangeText={text => setWeight(text)} keyboardType='decimal-pad' returnKeyType='done'/>
       <Text style={styles.field}>Bottles</Text>
       <NumericInput type='up-down' onChange={bottle => setBottles(bottle)} minValue='0'/>
       <Text style={styles.field}>Hours</Text>
       <NumericInput type='up-down' onChange={hour => setTime(hour)} minValue='0'/>
+      <Text style={styles.field}>Gender</Text>
       <RadioForm
         style={styles.radio}
         buttonSize = {10}
