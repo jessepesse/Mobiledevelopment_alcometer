@@ -49,21 +49,13 @@ export default function App() {
     else {
       result = gramsl / (weight * 0.6)
     }
-    setResult(result);
-  }
-
-  function underzero() {
     if (result<0){
       setEndresult(0)
     }
     else {
       setEndresult(result)
     }
-  }
-
-  function buttonclick() {
-    calculate();
-    underzero();
+    
   }
   
   function resultcolor() {
@@ -103,12 +95,12 @@ export default function App() {
 
       <View style={theme.field}>
       <Text style={theme.text}>Bottles</Text>
-      <NumericInput type='up-down' onChange={bottle => setBottles(bottle)} min={0} textColor={theme.specialcolor}/>
+      <NumericInput type='up-down' onChange={bottle => setBottles(bottle)} minValue={0} textColor={theme.specialcolor}/>
       </View>
 
       <View style={theme.field}>
       <Text style={theme.text}>Hours</Text>
-      <NumericInput type='up-down' onChange={hour => setTime(hour)} min={0} textColor={theme.specialcolor}/>
+      <NumericInput type='up-down' onChange={hour => setTime(hour)} minValue={0} textColor={theme.specialcolor}/>
       </View>
 
       <View style={theme.field}>
@@ -126,7 +118,7 @@ export default function App() {
       </View>
 
       <Text style={[theme.Titletext,resultcolor()]}>{endresult.toFixed(2)}</Text>
-      <Pressable style={theme.fieldbutton} onPress={buttonclick}><Text style={theme.button}>Calculate</Text></Pressable>
+      <Pressable style={theme.fieldbutton} onPress={calculate}><Text style={theme.button}>Calculate</Text></Pressable>
     </View>
   );
 }
